@@ -5,11 +5,11 @@ import { Mail, User, Phone, Lock } from "lucide-react";
 import axios from "axios";
 import { storage } from "../../../utils/storage";
 interface user {
-    email:string
-    username:string
-    mobile:string
-    password:string
-    createdAt:Date
+    email: string
+    username: string
+    mobile: string
+    password: string
+    createdAt: Date
 }
 export default function Register() {
     const [formData, setFormData] = useState({
@@ -40,9 +40,9 @@ export default function Register() {
             return;
         }
 
-        if(!formData.email){
-        setError("Please enter email")
-        return
+        if (!formData.email) {
+            setError("Please enter email")
+            return
         }
 
         // Validate mobile number
@@ -59,29 +59,25 @@ export default function Register() {
             return;
         }
 
-        const existingUser = storage.findUserByEmail(formData.email);
-       
-        if (existingUser) {
-            setError("Email already exists");
-            return;
-        }
 
         const newUser = {
             email: formData.email,
             username: formData.username,
             mobile: formData.mobile,
-            password:formData.password,
+            password: formData.password,
             createdAt: new Date().toISOString()
         };
 
         try {
             const response = await axios.post('/api/register', newUser);
             const data = await response.data;
-            if (data.error) {
+
+            if (!data.success) {
                 setError(data.error);
             } else {
-                storage.saveUser(newUser)  
-                router.push('/');
+                localStorage.setItem('users', JSON.stringify(data.users));
+                localStorage.setItem('email', JSON.stringify(data.user.email));
+                router.push('/login');
             }
         } catch (err) {
             setError("An error occurred during registration");
@@ -110,7 +106,7 @@ export default function Register() {
                                 onChange={handleChange}
                                 className="w-full pl-10 pr-3 py-2 rounded-md bg-gray-700 bg-opacity-50 text-white placeholder-gray-400 border border-gray-600 focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
                                 placeholder="Email"
-                                
+
                             />
                         </div>
 

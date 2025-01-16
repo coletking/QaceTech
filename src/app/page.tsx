@@ -24,7 +24,7 @@ export default function Home() {
     <div className="h-screen bg-cover bg-center" style={{ backgroundImage: "url('/images/bg1.jpg')" }}>
       <div className="flex flex-col items-center justify-center h-full text-center bg-[#0a0a0a61]">
         <h1 className="text-4xl font-bold text-white mb-4">
-          {user ? `Hi, ${user}` : "Welcome to EPS Test Automation Training Application"}
+          {user ? `Hi, ${user}, Thanks for trying this test application. Hope to hear from you soon.` : "Welcome to kingsley julius test app with test automation setup (Playwright)"}
         </h1>
         {!user ? (
           <div className="flex gap-4">

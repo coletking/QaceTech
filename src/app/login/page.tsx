@@ -24,8 +24,8 @@ const LoginInterface = () => {
         const res = await axios.post('/api/login', user);
 
         const data = await res.data;
-        const existingUser = storage.findUserByEmail(data.user.email);
-        if (!existingUser) {
+       
+        if (!data.success) {
             setError("user not found");
             return;
         } else {
